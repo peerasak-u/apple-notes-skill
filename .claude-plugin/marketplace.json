@@ -1,0 +1,21 @@
+{
+  "name": "apple-notes-marketplace",
+  "owner": {
+    "name": "Peerasak Unsakon",
+    "email": "clonezer@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "apple-notes",
+      "source": "./",
+      "description": "Interact with Apple Notes on macOS via JXA (JavaScript for Automation)",
+      "strict": false,
+      "keywords": ["apple-notes", "macos", "jxa", "notes", "automation"],
+      "skills": ["./skills/apple-notes"]
+    }
+  ],
+  "metadata": {
+    "description": "Marketplace for the apple-notes skill",
+    "version": "1.0.0"
+  }
+}

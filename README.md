@@ -39,14 +39,22 @@ Agent Skills are folders of instructions, scripts, and resources that agents can
 
 ## Installation
 
-### As Claude Code Plugin
+### Claude Code
 
 ```bash
-# Clone the repository
+/plugin marketplace add peerasak-u/apple-notes-skill
+/plugin install apple-notes@peerasak-u/apple-notes-skill
+```
+
+Restart Claude Code after installation.
+
+### Manual Installation
+
+Clone the repository and use with Claude Code:
+
+```bash
 git clone https://github.com/peerasak-u/apple-notes-skill.git
 cd apple-notes-skill
-
-# Use with Claude Code
 claude --plugin-dir .
 ```
 
@@ -57,8 +65,10 @@ claude --plugin-dir .
 git clone https://github.com/peerasak-u/apple-notes-skill.git
 cd apple-notes-skill
 
-# Install for OpenCode (use skills/apple-notes/ directory)
+# Backup existing skill if present, then install
+[ -d ~/.opencode/skill/apple-notes ] && mv ~/.opencode/skill/apple-notes ~/.opencode/skill/apple-notes.tmp
 cp -r skills/apple-notes ~/.opencode/skill/apple-notes
+rm -rf ~/.opencode/skill/apple-notes.tmp
 ```
 
 ### Usage
