@@ -1,5 +1,25 @@
 # Command Reference
 
+## Setup
+
+First, set the skill directory path (checks multiple possible locations):
+
+```bash
+APPLE_NOTES_SKILL_DIR="$(
+  for dir in \
+    ~/.claude/plugins/cache/apple-notes-marketplace/apple-notes \
+    ~/.claude/skills/apple-notes \
+    ~/.opencode/skill/apple-notes; do
+    if [ -d "$dir" ]; then
+      echo "$dir"
+      break
+    fi
+  done
+)"
+```
+
+All commands below use: `osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" <command> [args]`
+
 ## Contents
 
 - [search](#search) - Search by content
@@ -17,7 +37,7 @@
 Search notes by body content.
 
 ```bash
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" search "<query>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" search "<query>"
 ```
 
 **Output**: List of matching notes with title, folder, modified date, and preview.
@@ -29,7 +49,7 @@ osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" search "<query>"
 List notes whose title contains the query. Returns indexed results.
 
 ```bash
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" list "<query>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" list "<query>"
 ```
 
 **Output**: Numbered list. Use the index with `read-index`.
@@ -42,13 +62,13 @@ Read a note by title. Optionally specify folder.
 
 ```bash
 # From any folder
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" read "<title>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" read "<title>"
 
 # From specific folder
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" read "<title>" "<folder>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" read "<title>" "<folder>"
 
 # From nested folder
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" read "<title>" "Work/Projects"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" read "<title>" "Work/Projects"
 ```
 
 **Output**: Full note content in Markdown with metadata header.
@@ -61,8 +81,8 @@ Read a note by its index from a previous `list` result.
 
 ```bash
 # First list, then read by 1-based index
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" list "meeting"
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" read-index "meeting" 2
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" list "meeting"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" read-index "meeting" 2
 ```
 
 ---
@@ -73,16 +93,16 @@ Get recently modified notes. Default count is 5.
 
 ```bash
 # Default: 5 recent from all folders
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" recent
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" recent
 
 # Custom count
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" recent 10
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" recent 10
 
 # From specific folder
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" recent 5 "Work"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" recent 5 "Work"
 
 # Folder first (also works)
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" recent "Work" 10
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" recent "Work" 10
 ```
 
 ---
@@ -93,10 +113,10 @@ Create a new note from Markdown. Default folder is "Notes".
 
 ```bash
 # In default folder
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" create "<title>" "<markdown-body>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" create "<title>" "<markdown-body>"
 
 # In specific folder
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" create "<title>" "<markdown-body>" "<folder>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" create "<title>" "<markdown-body>" "<folder>"
 ```
 
 **Note**: If title exists, a suffix like "(2)" is added.
@@ -111,10 +131,10 @@ Delete a note by exact title match.
 
 ```bash
 # Delete from any folder
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" delete "<exact-title>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" delete "<exact-title>"
 
 # Delete from specific folder
-osascript -l JavaScript "$SKILL_PATH/scripts/notes.js" delete "<exact-title>" "<folder>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" delete "<exact-title>" "<folder>"
 ```
 
 **Warning**: Permanent deletion. Requires exact title match.

@@ -9,9 +9,23 @@ Interacts with Apple Notes via JXA (JavaScript for Automation).
 
 ## Quick Reference
 
-All commands use: `osascript -l JavaScript "$SKILL_DIR/scripts/notes.js" <command> [args]`
+First, set the skill directory path (checks multiple possible locations):
 
-Where `$SKILL_DIR` is automatically provided by Claude Code.
+```bash
+APPLE_NOTES_SKILL_DIR="$(
+  for dir in \
+    ~/.claude/plugins/cache/apple-notes-marketplace/apple-notes \
+    ~/.claude/skills/apple-notes \
+    ~/.opencode/skill/apple-notes; do
+    if [ -d "$dir" ]; then
+      echo "$dir"
+      break
+    fi
+  done
+)"
+```
+
+All commands use: `osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" <command> [args]`
 
 | Command | Usage |
 |---------|-------|
@@ -31,21 +45,21 @@ Where `$SKILL_DIR` is automatically provided by Claude Code.
 
 ```bash
 # Search by title
-osascript -l JavaScript "$SKILL_DIR/scripts/notes.js" list "budget"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" list "budget"
 # Read the second result
-osascript -l JavaScript "$SKILL_DIR/scripts/notes.js" read-index "budget" 2
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" read-index "budget" 2
 ```
 
 ### Create a note
 
 ```bash
-osascript -l JavaScript "$SKILL_DIR/scripts/notes.js" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
 ```
 
 ### Check recent activity
 
 ```bash
-osascript -l JavaScript "$SKILL_DIR/scripts/notes.js" recent 10
+osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" recent 10
 ```
 
 ## Output Format
