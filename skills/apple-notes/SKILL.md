@@ -12,13 +12,14 @@ Interacts with Apple Notes via JXA (JavaScript for Automation).
 ### Setup (run once per session)
 
 ```bash
+# Set the path (run this once per terminal session)
 export APPLE_NOTES_SKILL_PATH="$(for d in ~/.claude/plugins/marketplaces/apple-notes-marketplace/skills/apple-notes ~/.claude/skills/apple-notes ~/.opencode/skill/apple-notes; do [ -x "$d/scripts/run.sh" ] && echo "$d" && break; done)"
 ```
 
 ### Run commands
 
 ```bash
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" <command> [args]
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" <command> [args]
 ```
 
 | Command | Usage |
@@ -38,20 +39,20 @@ export APPLE_NOTES_SKILL_PATH="$(for d in ~/.claude/plugins/marketplaces/apple-n
 ### Find and read a note
 
 ```bash
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" list "budget"
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read-index "budget" 2
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" list "budget"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read-index "budget" 2
 ```
 
 ### Create a note
 
 ```bash
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
 ```
 
 ### Check recent activity
 
 ```bash
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent 10
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent 10
 ```
 
 ## Output Format

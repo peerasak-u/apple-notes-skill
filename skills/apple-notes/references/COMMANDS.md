@@ -3,13 +3,14 @@
 ## Setup (run once per session)
 
 ```bash
+# Set the path (run this once per terminal session)
 export APPLE_NOTES_SKILL_PATH="$(for d in ~/.claude/plugins/marketplaces/apple-notes-marketplace/skills/apple-notes ~/.claude/skills/apple-notes ~/.opencode/skill/apple-notes; do [ -x "$d/scripts/run.sh" ] && echo "$d" && break; done)"
 ```
 
 ## Run commands
 
 ```bash
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" <command> [args]
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" <command> [args]
 ```
 
 ## Contents
@@ -29,7 +30,7 @@ export APPLE_NOTES_SKILL_PATH="$(for d in ~/.claude/plugins/marketplaces/apple-n
 Search notes by body content.
 
 ```bash
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" search "<query>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" search "<query>"
 ```
 
 **Output**: List of matching notes with title, folder, modified date, and preview.
@@ -41,7 +42,7 @@ Search notes by body content.
 List notes whose title contains the query. Returns indexed results.
 
 ```bash
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" list "<query>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" list "<query>"
 ```
 
 **Output**: Numbered list. Use the index with `read-index`.
@@ -54,13 +55,13 @@ Read a note by title. Optionally specify folder.
 
 ```bash
 # From any folder
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read "<title>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read "<title>"
 
 # From specific folder
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read "<title>" "<folder>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read "<title>" "<folder>"
 
 # From nested folder
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read "<title>" "Work/Projects"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read "<title>" "Work/Projects"
 ```
 
 **Output**: Full note content in Markdown with metadata header.
@@ -73,8 +74,8 @@ Read a note by its index from a previous `list` result.
 
 ```bash
 # First list, then read by 1-based index
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" list "meeting"
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read-index "meeting" 2
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" list "meeting"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read-index "meeting" 2
 ```
 
 ---
@@ -85,16 +86,16 @@ Get recently modified notes. Default count is 5.
 
 ```bash
 # Default: 5 recent from all folders
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent
 
 # Custom count
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent 10
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent 10
 
 # From specific folder
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent 5 "Work"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent 5 "Work"
 
 # Folder first (also works)
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent "Work" 10
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent "Work" 10
 ```
 
 ---
@@ -105,10 +106,10 @@ Create a new note from Markdown. Default folder is "Notes".
 
 ```bash
 # In default folder
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" create "<title>" "<markdown-body>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" create "<title>" "<markdown-body>"
 
 # In specific folder
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" create "<title>" "<markdown-body>" "<folder>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" create "<title>" "<markdown-body>" "<folder>"
 ```
 
 **Note**: If title exists, a suffix like "(2)" is added.
@@ -123,10 +124,10 @@ Delete a note by exact title match.
 
 ```bash
 # Delete from any folder
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" delete "<exact-title>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" delete "<exact-title>"
 
 # Delete from specific folder
-"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" delete "<exact-title>" "<folder>"
+osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" delete "<exact-title>" "<folder>"
 ```
 
 **Warning**: Permanent deletion. Requires exact title match.
