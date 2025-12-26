@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 npm test                          # Run all tests
 npm run test:coverage             # Run tests with coverage
-npm run lint                      # Run ESLint on tests/ and scripts/
+npm run lint                      # Run ESLint on tests/
 npm run lint:fix                  # Auto-fix linting issues
 npm run format                    # Format with Prettier
 npm run typecheck                 # TypeScript type checking (JS files)
@@ -35,7 +35,7 @@ This is a JXA (JavaScript for Automation) skill for Apple Notes on macOS. The ma
 
 - `skill/notes.js` runs in **JXA environment** (osascript) - no Node.js built-ins, no async/await, no ES modules
 - Tests run in **Node.js** - uses `node:test` and `node:assert`
-- Type checking via `checkJs: true` applies only to tests/ and scripts/, not skill/
+- Type checking via `checkJs: true` applies only to tests/, not skill/
 
 ## Code Style
 
