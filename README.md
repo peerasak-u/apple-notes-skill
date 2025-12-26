@@ -9,6 +9,8 @@
 
 This skill provides command-line access to Apple Notes on macOS. It can read, search, list, create, and delete notes, automatically converting between HTML and Markdown for seamless integration with your development workflow.
 
+**Compatible with both [OpenCode](https://opencode.ai) and [Claude Code](https://claude.ai/code)** - install once and use with your preferred AI coding assistant.
+
 ## Features
 
 - 🔍 **Search** - Find notes by content
@@ -34,20 +36,27 @@ This skill provides command-line access to Apple Notes on macOS. It can read, se
 git clone https://github.com/your-username/apple-notes-skill.git
 cd apple-notes-skill
 
-# Copy skill to OpenCode or Claude
+# Install for OpenCode
 cp -r skill ~/.opencode/skill/apple-notes
-# or
-cp -r skill ~/.claude/skills/apple-notes
+
+# Install for Claude Code
+cp -r skill ~/.claude/commands/apple-notes
 ```
 
-### Usage with OpenCode
+### Usage with OpenCode or Claude Code
 
-Once installed, you can use the skill directly in OpenCode:
+Once installed, you can use the skill directly in your AI coding assistant:
 
 ```bash
-# OpenCode automatically loads the skill
+# OpenCode
 # Just ask: "List all my notes about project X"
+
+# Claude Code
+# Use the slash command: /apple-notes
+# Or ask: "Use the apple-notes skill to list my notes"
 ```
+
+Both tools will automatically load the skill and provide natural language access to your Apple Notes.
 
 ### Command-Line Usage
 
@@ -261,7 +270,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Acknowledgments
 
 - Built with [JXA](https://developer.apple.com/library/archive/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/) (JavaScript for Automation)
-- Compatible with [OpenCode](https://opencode.ai)
+- Compatible with [OpenCode](https://opencode.ai) and [Claude Code](https://claude.ai/code)
 
 ## Support
 
