@@ -1,0 +1,43 @@
+{
+  "name": "apple-notes-skill",
+  "version": "1.0.0",
+  "description": "Interact with Apple Notes app from the command line using JXA",
+  "type": "module",
+  "main": "skill/notes.js",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage tests/*.test.js",
+    "lint": "eslint tests/*.js scripts/*.js",
+    "lint:fix": "eslint --fix tests/*.js scripts/*.js",
+    "format": "prettier --write tests/*.js scripts/*.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "apple-notes",
+    "jxa",
+    "macos",
+    "notes",
+    "automation",
+    "opencode",
+    "skill"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/apple-notes-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/apple-notes-skill/issues"
+  },
+  "homepage": "https://github.com/your-username/apple-notes-skill#readme"
+}
