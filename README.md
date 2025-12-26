@@ -286,4 +286,3 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 - 📖 [Documentation](./docs/)
 - 🐛 [Report Issues](https://github.com/peerasak-u/apple-notes-skill/issues)
-- 💬 [Discussions](https://github.com/peerasak-u/apple-notes-skill/discussions)
