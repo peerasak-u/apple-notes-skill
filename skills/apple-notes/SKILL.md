@@ -9,28 +9,26 @@ Interacts with Apple Notes via JXA (JavaScript for Automation).
 
 ## Quick Reference
 
-First, set the skill directory path (checks multiple possible locations):
+### Using the Wrapper Script (Recommended)
+
+The skill includes a convenient wrapper script that handles path detection automatically:
 
 ```bash
-APPLE_NOTES_SKILL_DIR="$(
-  possible_dirs=(
-    ~/.claude/plugins/apple-notes-marketplace/skills/apple-notes
-    ~/.claude/skills/apple-notes
-    ~/.opencode/skill/apple-notes
-  )
-  for dir in "${possible_dirs[@]}"; do
-    dir="${dir/#\~/$HOME}"
-    if [ -d "$dir/scripts" ]; then
-      echo "$dir"
-      exit 0
-    fi
-  done
-  echo "Error: apple-notes skill directory not found" >&2
-  exit 1
-)" || { echo "Failed to locate apple-notes skill. Tried: ${possible_dirs[*]}"; exit 1; }
+# Find the skill directory (try these locations in order)
+~/.claude/plugins/apple-notes-marketplace/skills/apple-notes/scripts/run.sh <command> [args]
+~/.claude/skills/apple-notes/scripts/run.sh <command> [args]
+~/.opencode/skill/apple-notes/scripts/run.sh <command> [args]
 ```
 
-All commands use: `osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" <command> [args]`
+The `run.sh` wrapper automatically locates `notes.js` and forwards all arguments.
+
+### Direct JXA Invocation (Alternative)
+
+For direct control, you can invoke the JXA script directly:
+
+```bash
+osascript -l JavaScript <path-to-skill>/scripts/notes.js <command> [args]
+```
 
 | Command | Usage |
 |---------|-------|
@@ -49,22 +47,22 @@ All commands use: `osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes
 ### Find and read a note
 
 ```bash
-# Search by title
-osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" list "budget"
+# Search by title (using wrapper script)
+~/.claude/skills/apple-notes/scripts/run.sh list "budget"
 # Read the second result
-osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" read-index "budget" 2
+~/.claude/skills/apple-notes/scripts/run.sh read-index "budget" 2
 ```
 
 ### Create a note
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
+~/.claude/skills/apple-notes/scripts/run.sh create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
 ```
 
 ### Check recent activity
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" recent 10
+~/.claude/skills/apple-notes/scripts/run.sh recent 10
 ```
 
 ## Output Format
