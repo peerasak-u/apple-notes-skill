@@ -13,16 +13,21 @@ First, set the skill directory path (checks multiple possible locations):
 
 ```bash
 APPLE_NOTES_SKILL_DIR="$(
-  for dir in \
-    ~/.claude/plugins/cache/apple-notes-marketplace/apple-notes \
-    ~/.claude/skills/apple-notes \
-    ~/.opencode/skill/apple-notes; do
-    if [ -d "$dir" ]; then
+  possible_dirs=(
+    ~/.claude/plugins/apple-notes-marketplace/skills/apple-notes
+    ~/.claude/skills/apple-notes
+    ~/.opencode/skill/apple-notes
+  )
+  for dir in "${possible_dirs[@]}"; do
+    dir="${dir/#\~/$HOME}"
+    if [ -d "$dir/scripts" ]; then
       echo "$dir"
-      break
+      exit 0
     fi
   done
-)"
+  echo "Error: apple-notes skill directory not found" >&2
+  exit 1
+)" || { echo "Failed to locate apple-notes skill. Tried: ${possible_dirs[*]}"; exit 1; }
 ```
 
 All commands use: `osascript -l JavaScript "$APPLE_NOTES_SKILL_DIR/scripts/notes.js" <command> [args]`
