@@ -42,7 +42,7 @@ Agent Skills are folders of instructions, scripts, and resources that agents can
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/apple-notes-skill.git
+git clone https://github.com/peerasak-u/apple-notes-skill.git
 cd apple-notes-skill
 
 # Install for OpenCode
@@ -284,5 +284,5 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Support
 
 - 📖 [Documentation](./docs/)
-- 🐛 [Report Issues](https://github.com/your-username/apple-notes-skill/issues)
-- 💬 [Discussions](https://github.com/your-username/apple-notes-skill/discussions)
+- 🐛 [Report Issues](https://github.com/peerasak-u/apple-notes-skill/issues)
+- 💬 [Discussions](https://github.com/peerasak-u/apple-notes-skill/discussions)
