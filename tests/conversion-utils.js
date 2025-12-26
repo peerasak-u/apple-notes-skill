@@ -2,7 +2,9 @@
 // These are Node.js ports of the JXA functions for testing
 
 function htmlToMarkdown(html) {
-  if (!html) return "";
+  if (!html) {
+    return "";
+  }
 
   let md = html;
 
@@ -82,7 +84,9 @@ function htmlToMarkdown(html) {
 }
 
 function markdownToHtml(markdown) {
-  if (!markdown) return "";
+  if (!markdown) {
+    return "";
+  }
 
   let html = markdown;
 

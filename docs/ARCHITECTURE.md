@@ -184,7 +184,7 @@ return "Error: No notes found matching...";
 
 ### Unit Tests
 
-Test pure JavaScript functions in Node.js:
+Test pure JavaScript functions using Bun test runner:
 - `htmlToMarkdown()` conversion
 - `markdownToHtml()` conversion
 - `getPreview()` utility
@@ -204,14 +204,14 @@ Run with actual Apple Notes (requires macOS):
 ### Running Tests
 
 ```bash
-# Unit tests (Node.js)
-npm test
+# Unit tests (Bun)
+bun test
 
 # Unit tests with coverage
-npm run test:coverage
+bun test --coverage tests/*.test.js
 
 # Integration tests (macOS only)
-npm run test:integration
+bun test tests/integration.test.js
 ```
 
 ## Limitations

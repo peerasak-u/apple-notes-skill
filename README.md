@@ -35,6 +35,7 @@ Agent Skills are folders of instructions, scripts, and resources that agents can
 - macOS 10.10+
 - Apple Notes app installed
 - `osascript` (included with macOS)
+- Bun 1.0+ (for development/testing)
 
 ## Installation
 
@@ -228,7 +229,7 @@ apple-notes-skill/
 ├── scripts/            # Utility scripts
 ├── README.md           # This file
 ├── LICENSE             # MIT License
-├── package.json        # Node.js tooling
+├── package.json        # Bun tooling
 └── .gitignore
 ```
 
@@ -236,23 +237,23 @@ apple-notes-skill/
 
 ```bash
 # Install dependencies
-npm install
+bun install
 
 # Run tests
-npm test
+bun test
 
 # Run tests with coverage
-npm run test:coverage
+bun test --coverage tests/*.test.js
 ```
 
 ### Linting
 
 ```bash
 # Run linter
-npm run lint
+bun run lint
 
 # Fix linting issues
-npm run lint:fix
+bun run lint:fix
 ```
 
 ## Contributing

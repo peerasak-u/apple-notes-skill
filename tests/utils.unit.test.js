@@ -1,10 +1,12 @@
-import { describe, it } from "node:test";
+import { describe, it } from "bun:test";
 import assert from "node:assert";
 
 // Utility functions for testing
 
 function getPreview(body, maxLength) {
-  if (!body) return "";
+  if (!body) {
+    return "";
+  }
   const length = Math.min(maxLength, body.length);
   let preview = body.substring(0, length);
   if (body.length > length) {
@@ -21,6 +23,7 @@ function generateUniqueTitle(baseTitle, existingTitles) {
   }
 
   let suffix = 2;
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const candidate = `${baseTitle} (${suffix})`;
     if (!existingSet.has(candidate)) {

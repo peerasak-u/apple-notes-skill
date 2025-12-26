@@ -1,12 +1,12 @@
 {
   "name": "apple-notes-skill",
   "version": "1.0.0",
-  "description": "An Agent Skill for interacting with Apple Notes on macOS using JXA",
+  "description": "An Agent Skill for interacting with Apple Notes on macOS using JXA and Bun",
   "type": "module",
   "main": "skill/notes.js",
   "scripts": {
-    "test": "node --test tests/*.test.js",
-    "test:coverage": "node --test --experimental-test-coverage tests/*.test.js",
+    "test": "bun test tests/*.test.js",
+    "test:coverage": "bun test --coverage tests/*.test.js",
     "lint": "eslint tests/*.js",
     "lint:fix": "eslint --fix tests/*.js",
     "format": "prettier --write tests/*.js",
@@ -25,10 +25,10 @@
   "author": "",
   "license": "MIT",
   "engines": {
-    "node": ">=18.0.0"
+    "bun": ">=1.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.10.0",
+    "@types/bun": "latest",
     "eslint": "^8.55.0",
     "prettier": "^3.1.0",
     "typescript": "^5.3.0"

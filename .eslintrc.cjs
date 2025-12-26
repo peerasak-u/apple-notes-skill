@@ -16,13 +16,4 @@ module.exports = {
     eqeqeq: ["error", "always"],
     curly: ["error", "all"],
   },
-  overrides: [
-    {
-      files: ["tests/**/*.js"],
-      env: {
-        node: true,
-        mocha: true,
-      },
-    },
-  ],
 };
