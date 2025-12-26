@@ -9,25 +9,16 @@ Interacts with Apple Notes via JXA (JavaScript for Automation).
 
 ## Quick Reference
 
-### Using the Wrapper Script (Recommended)
-
-The skill includes a convenient wrapper script that handles path detection automatically:
+### Setup (run once per session)
 
 ```bash
-# Find the skill directory (try these locations in order)
-~/.claude/plugins/apple-notes-marketplace/skills/apple-notes/scripts/run.sh <command> [args]
-~/.claude/skills/apple-notes/scripts/run.sh <command> [args]
-~/.opencode/skill/apple-notes/scripts/run.sh <command> [args]
+export APPLE_NOTES_SKILL_PATH="$(for d in ~/.claude/plugins/marketplaces/apple-notes-marketplace/skills/apple-notes ~/.claude/skills/apple-notes ~/.opencode/skill/apple-notes; do [ -x "$d/scripts/run.sh" ] && echo "$d" && break; done)"
 ```
 
-The `run.sh` wrapper automatically locates `notes.js` and forwards all arguments.
-
-### Direct JXA Invocation (Alternative)
-
-For direct control, you can invoke the JXA script directly:
+### Run commands
 
 ```bash
-osascript -l JavaScript <path-to-skill>/scripts/notes.js <command> [args]
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" <command> [args]
 ```
 
 | Command | Usage |
@@ -47,22 +38,20 @@ osascript -l JavaScript <path-to-skill>/scripts/notes.js <command> [args]
 ### Find and read a note
 
 ```bash
-# Search by title (using wrapper script)
-~/.claude/skills/apple-notes/scripts/run.sh list "budget"
-# Read the second result
-~/.claude/skills/apple-notes/scripts/run.sh read-index "budget" 2
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" list "budget"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read-index "budget" 2
 ```
 
 ### Create a note
 
 ```bash
-~/.claude/skills/apple-notes/scripts/run.sh create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
 ```
 
 ### Check recent activity
 
 ```bash
-~/.claude/skills/apple-notes/scripts/run.sh recent 10
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent 10
 ```
 
 ## Output Format

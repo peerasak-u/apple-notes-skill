@@ -1,24 +1,15 @@
 # Command Reference
 
-## Setup
-
-### Using the Wrapper Script (Recommended)
-
-The skill includes a wrapper script `run.sh` that simplifies command execution. No setup required:
+## Setup (run once per session)
 
 ```bash
-# Use one of these paths (skill auto-detects notes.js location):
-~/.claude/plugins/apple-notes-marketplace/skills/apple-notes/scripts/run.sh <command> [args]
-~/.claude/skills/apple-notes/scripts/run.sh <command> [args]
-~/.opencode/skill/apple-notes/scripts/run.sh <command> [args]
+export APPLE_NOTES_SKILL_PATH="$(for d in ~/.claude/plugins/marketplaces/apple-notes-marketplace/skills/apple-notes ~/.claude/skills/apple-notes ~/.opencode/skill/apple-notes; do [ -x "$d/scripts/run.sh" ] && echo "$d" && break; done)"
 ```
 
-For brevity, examples below use `run.sh` as shorthand for the full path to the wrapper script.
-
-### Direct JXA Invocation (Alternative)
+## Run commands
 
 ```bash
-osascript -l JavaScript <path-to-skill>/scripts/notes.js <command> [args]
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" <command> [args]
 ```
 
 ## Contents
@@ -38,7 +29,7 @@ osascript -l JavaScript <path-to-skill>/scripts/notes.js <command> [args]
 Search notes by body content.
 
 ```bash
-run.sh search "<query>"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" search "<query>"
 ```
 
 **Output**: List of matching notes with title, folder, modified date, and preview.
@@ -50,7 +41,7 @@ run.sh search "<query>"
 List notes whose title contains the query. Returns indexed results.
 
 ```bash
-run.sh list "<query>"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" list "<query>"
 ```
 
 **Output**: Numbered list. Use the index with `read-index`.
@@ -63,13 +54,13 @@ Read a note by title. Optionally specify folder.
 
 ```bash
 # From any folder
-run.sh read "<title>"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read "<title>"
 
 # From specific folder
-run.sh read "<title>" "<folder>"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read "<title>" "<folder>"
 
 # From nested folder
-run.sh read "<title>" "Work/Projects"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read "<title>" "Work/Projects"
 ```
 
 **Output**: Full note content in Markdown with metadata header.
@@ -82,8 +73,8 @@ Read a note by its index from a previous `list` result.
 
 ```bash
 # First list, then read by 1-based index
-run.sh list "meeting"
-run.sh read-index "meeting" 2
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" list "meeting"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" read-index "meeting" 2
 ```
 
 ---
@@ -94,16 +85,16 @@ Get recently modified notes. Default count is 5.
 
 ```bash
 # Default: 5 recent from all folders
-run.sh recent
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent
 
 # Custom count
-run.sh recent 10
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent 10
 
 # From specific folder
-run.sh recent 5 "Work"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent 5 "Work"
 
 # Folder first (also works)
-run.sh recent "Work" 10
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" recent "Work" 10
 ```
 
 ---
@@ -114,10 +105,10 @@ Create a new note from Markdown. Default folder is "Notes".
 
 ```bash
 # In default folder
-run.sh create "<title>" "<markdown-body>"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" create "<title>" "<markdown-body>"
 
 # In specific folder
-run.sh create "<title>" "<markdown-body>" "<folder>"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" create "<title>" "<markdown-body>" "<folder>"
 ```
 
 **Note**: If title exists, a suffix like "(2)" is added.
@@ -132,10 +123,10 @@ Delete a note by exact title match.
 
 ```bash
 # Delete from any folder
-run.sh delete "<exact-title>"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" delete "<exact-title>"
 
 # Delete from specific folder
-run.sh delete "<exact-title>" "<folder>"
+"$APPLE_NOTES_SKILL_PATH/scripts/run.sh" delete "<exact-title>" "<folder>"
 ```
 
 **Warning**: Permanent deletion. Requires exact title match.
