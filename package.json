@@ -1,7 +1,7 @@
 {
   "name": "apple-notes-skill",
   "version": "1.0.0",
-  "description": "Interact with Apple Notes app from the command line using JXA",
+  "description": "An Agent Skill for interacting with Apple Notes on macOS using JXA",
   "type": "module",
   "main": "skill/notes.js",
   "scripts": {
@@ -17,9 +17,10 @@
     "jxa",
     "macos",
     "notes",
-    "automation",
     "opencode",
-    "skill"
+    "claude code",
+    "skill",
+    "agent skills"
   ],
   "author": "",
   "license": "MIT",

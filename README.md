@@ -1,15 +1,24 @@
 # Apple Notes Skill
 
-> 🍎 Interact with Apple Notes app from the command line using JXA (JavaScript for Automation)
+> 🍎 An Agent Skill for interacting with Apple Notes on macOS
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: macOS](https://img.shields.io/badge/Platform-macOS-lightgrey)](https://www.apple.com/macos/)
+[![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-green)](https://agentskills.io)
 
 ## Overview
 
-This skill provides command-line access to Apple Notes on macOS. It can read, search, list, create, and delete notes, automatically converting between HTML and Markdown for seamless integration with your development workflow.
+This is an **Agent Skill** that gives AI agents the ability to interact with Apple Notes on macOS. It extends agent capabilities with domain expertise for reading, searching, listing, creating, and deleting notes, with automatic HTML-to-Markdown conversion for seamless integration with development workflows.
 
-**Compatible with both [OpenCode](https://opencode.ai) and [Claude Code](https://claude.ai/code)** - install once and use with your preferred AI coding assistant.
+Built using the [Agent Skills](https://agentskills.io) open format - a simple, interoperable standard for extending agent capabilities. Install once and use with any Agent Skills-compatible product.
+
+### What are Agent Skills?
+
+Agent Skills are folders of instructions, scripts, and resources that agents can discover and use to do things more accurately and efficiently. They enable:
+
+- **New capabilities**: Give agents the ability to interact with local applications and system resources
+- **Domain expertise**: Package specialized knowledge into reusable instructions
+- **Interoperability**: Use the same skill across multiple agent products (OpenCode, Claude Code, Cursor, Amp, and more)
 
 ## Features
 
