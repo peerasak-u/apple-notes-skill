@@ -1,16 +1,16 @@
 # Apple Notes Skill
 
-> 🍎 An Agent Skill for interacting with Apple Notes on macOS
+> 🍎 A Claude Code Plugin for interacting with Apple Notes on macOS
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: macOS](https://img.shields.io/badge/Platform-macOS-lightgrey)](https://www.apple.com/macos/)
-[![Agent Skills](https://img.shields.io/badge/Agent_Skills-compatible-green)](https://agentskills.io)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blue)](https://claude.ai/code)
 
 ## Overview
 
-This is an **Agent Skill** that gives AI agents the ability to interact with Apple Notes on macOS. It extends agent capabilities with domain expertise for reading, searching, listing, creating, and deleting notes, with automatic HTML-to-Markdown conversion for seamless integration with development workflows.
+This is a **Claude Code Plugin** that provides an Apple Notes skill for interacting with notes on macOS. It extends Claude Code's capabilities with domain expertise for reading, searching, listing, creating, and deleting notes, with automatic HTML-to-Markdown conversion for seamless integration with development workflows.
 
-Built using the [Agent Skills](https://agentskills.io) open format - a simple, interoperable standard for extending agent capabilities. Install once and use with any Agent Skills-compatible product.
+Also compatible with [OpenCode](https://opencode.ai) and other Agent Skills-compatible products via the open format standard.
 
 ### What are Agent Skills?
 
@@ -39,43 +39,46 @@ Agent Skills are folders of instructions, scripts, and resources that agents can
 
 ## Installation
 
-### Manual Installation
+### As Claude Code Plugin
 
 ```bash
 # Clone the repository
 git clone https://github.com/peerasak-u/apple-notes-skill.git
 cd apple-notes-skill
 
-# Install for OpenCode
-cp -r skill ~/.opencode/skill/apple-notes
-
-# Install for Claude Code
-cp -r skill ~/.claude/commands/apple-notes
+# Use with Claude Code
+claude --plugin-dir .
 ```
 
-### Usage with OpenCode or Claude Code
+### For OpenCode (Agent Skills Format)
+
+```bash
+# Clone the repository
+git clone https://github.com/peerasak-u/apple-notes-skill.git
+cd apple-notes-skill
+
+# Install for OpenCode (use skills/apple-notes/ directory)
+cp -r skills/apple-notes ~/.opencode/skill/apple-notes
+```
+
+### Usage
 
 Once installed, you can use the skill directly in your AI coding assistant:
 
 ```bash
+# Claude Code
+# Just ask: "List all my notes about project X"
+# Claude will automatically use the apple-notes skill
+
 # OpenCode
 # Just ask: "List all my notes about project X"
-
-# Claude Code
-# Use the slash command: /apple-notes
-# Or ask: "Use the apple-notes skill to list my notes"
 ```
-
-Both tools will automatically load the skill and provide natural language access to your Apple Notes.
 
 ### Command-Line Usage
 
 ```bash
-# Set path to skill
-export APPLE_NOTES_SKILL_PATH="path/to/skill"
-
-# Execute commands
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" <command> [args...]
+# From the plugin directory
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" <command> [args...]
 ```
 
 ## Commands
@@ -83,13 +86,13 @@ osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" <command> [args...]
 ### Search Notes by Content
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" search "meeting notes"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" search "meeting notes"
 ```
 
 ### List Notes by Title
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" list "project"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" list "project"
 ```
 
 Returns indexed results for use with `read-index`.
@@ -98,46 +101,46 @@ Returns indexed results for use with `read-index`.
 
 ```bash
 # Read from any folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" read "My Note"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read "My Note"
 
 # Read from specific folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" read "My Note" "Work"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read "My Note" "Work"
 
 # Read from nested folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" read "My Note" "Work/Projects"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read "My Note" "Work/Projects"
 ```
 
 ### Read Note by Index
 
 ```bash
 # First, list notes
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" list "meeting"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" list "meeting"
 
 # Then read by index (1-based)
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" read-index "meeting" 2
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read-index "meeting" 2
 ```
 
 ### Get Recent Notes
 
 ```bash
 # Get 5 recent notes (default)
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" recent
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" recent
 
 # Get 10 recent notes
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" recent 10
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" recent 10
 
 # Get recent notes from specific folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" recent 5 "Work"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" recent 5 "Work"
 ```
 
 ### Create a Note
 
 ```bash
 # Create in default folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2"
 
 # Create in specific folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" create "Meeting Notes" "# Agenda\n- Item 1" "Work"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" create "Meeting Notes" "# Agenda\n- Item 1" "Work"
 ```
 
 Note: If a note with the same title exists, a suffix like "(2)" will be added.
@@ -146,10 +149,10 @@ Note: If a note with the same title exists, a suffix like "(2)" will be added.
 
 ```bash
 # Delete from any folder (exact title match)
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" delete "Old Note"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" delete "Old Note"
 
 # Delete from specific folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" delete "Old Note" "Archive"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" delete "Old Note" "Archive"
 ```
 
 ⚠️ **Warning**: This permanently deletes the note. Use exact title match.
@@ -160,7 +163,7 @@ osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" delete "Old Note" "Ar
 
 ```bash
 # Step 1: Search for notes about "budget"
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" list "budget"
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" list "budget"
 
 # Output shows indexed results like:
 # [1] Budget 2024
@@ -168,13 +171,13 @@ osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" list "budget"
 # [3] Project Budget
 
 # Step 2: Read the second result
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" read-index "budget" 2
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read-index "budget" 2
 ```
 
 ### Workflow: Create a Daily Note
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" create \
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" create \
   "Daily Log - 2024-01-15" \
   "# Tasks\n- [ ] Task 1\n- [ ] Task 2\n\n# Notes\nToday's observations..." \
   "Journal"
@@ -183,7 +186,7 @@ osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" create \
 ### Workflow: Check Recent Activity
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/notes.js" recent 10
+osascript -l JavaScript "skills/apple-notes/scripts/notes.js" recent 10
 ```
 
 ## HTML to Markdown Conversion
@@ -219,14 +222,19 @@ Errors are returned as strings starting with "Error:". Common errors:
 
 ```
 apple-notes-skill/
-├── skill/              # Main skill files
-│   ├── SKILL.md        # Skill definition
-│   └── notes.js        # JXA implementation
+├── .claude-plugin/     # Plugin manifest
+│   └── plugin.json
+├── skills/             # Skills directory
+│   └── apple-notes/    # Apple Notes skill
+│       ├── SKILL.md    # Skill definition
+│       ├── scripts/
+│       │   └── notes.js    # JXA implementation
+│       └── references/
+│           └── COMMANDS.md  # Command reference
 ├── tests/              # Unit tests
 │   ├── conversion.test.js
 │   └── utils.test.js
 ├── docs/               # Documentation
-├── scripts/            # Utility scripts
 ├── README.md           # This file
 ├── LICENSE             # MIT License
 ├── package.json        # Bun tooling
@@ -280,7 +288,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Acknowledgments
 
 - Built with [JXA](https://developer.apple.com/library/archive/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/) (JavaScript for Automation)
-- Compatible with [OpenCode](https://opencode.ai) and [Claude Code](https://claude.ai/code)
+- Distributed as [Claude Code Plugin](https://claude.ai/code)
+- Compatible with [OpenCode](https://opencode.ai) via Agent Skills format
 
 ## Support
 
