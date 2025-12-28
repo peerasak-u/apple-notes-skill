@@ -7,9 +7,10 @@ const __dirname = dirname(__filename);
 
 /**
  * Path to the bundled JXA notes.js script
+ * After build, __dirname is 'dist/', so we go up one level to package root
  */
 export function getNotesScriptPath(): string {
-  return join(__dirname, 'jxa', 'notes.js');
+  return join(__dirname, '..', 'src', 'jxa', 'notes.js');
 }
 
 /**
