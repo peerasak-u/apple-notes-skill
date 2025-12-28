@@ -1,5 +1,6 @@
-// Conversion tests for HTML <-> Markdown
-// These are Node.js ports of the JXA functions for testing
+// AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY
+// Source: skills/apple-notes/scripts/notes.js
+// Run `bun run sync-utils` to regenerate
 
 function htmlToMarkdown(html) {
   if (!html) {
@@ -31,10 +32,7 @@ function htmlToMarkdown(html) {
   md = md.replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, "[$2]($1)");
 
   // Images
-  md = md.replace(
-    /<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*\/?>/gi,
-    "![$2]($1)"
-  );
+  md = md.replace(/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*\/?>/gi, "![$2]($1)");
   md = md.replace(/<img[^>]*src="([^"]*)"[^>]*\/?>/gi, "![]($1)");
 
   // Lists - handle nested lists
@@ -152,5 +150,16 @@ function markdownToHtml(markdown) {
   return html;
 }
 
-// Export for testing
-export { htmlToMarkdown, markdownToHtml };
+function getPreview(body, maxLength) {
+  if (!body) {
+    return "";
+  }
+  const length = Math.min(maxLength, body.length);
+  let preview = body.substring(0, length);
+  if (body.length > length) {
+    preview += "...";
+  }
+  return preview;
+}
+
+export { htmlToMarkdown, markdownToHtml, getPreview };

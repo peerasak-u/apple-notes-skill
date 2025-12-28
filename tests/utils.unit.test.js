@@ -1,20 +1,11 @@
 import { describe, it } from "bun:test";
 import assert from "node:assert";
 
-// Utility functions for testing
+// Import synced utilities from notes.js
+import { getPreview } from "./conversion-utils.js";
 
-function getPreview(body, maxLength) {
-  if (!body) {
-    return "";
-  }
-  const length = Math.min(maxLength, body.length);
-  let preview = body.substring(0, length);
-  if (body.length > length) {
-    preview += "...";
-  }
-  return preview;
-}
-
+// generateUniqueTitle is kept inline because JXA version uses folder.notes()
+// which is not portable to Node.js/Bun runtime
 function generateUniqueTitle(baseTitle, existingTitles) {
   const existingSet = new Set(existingTitles);
 
