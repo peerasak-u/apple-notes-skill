@@ -1,5 +1,5 @@
 // AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY
-// Source: skills/apple-notes/scripts/notes.js
+// Source: src/jxa/notes.js
 // Run `bun run sync-utils` to regenerate
 
 function htmlToMarkdown(html) {

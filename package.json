@@ -1,17 +1,21 @@
 {
   "name": "apple-notes-skill",
   "version": "1.0.0",
-  "description": "An Agent Skill for interacting with Apple Notes on macOS using JXA and Bun",
+  "private": true,
+  "description": "An Agent Skill for interacting with Apple Notes on macOS",
   "type": "module",
-  "main": "skill/notes.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "sync-utils": "bun scripts/sync-test-utils.js",
-    "test": "bun run sync-utils && bun test tests/*.test.js",
-    "test:coverage": "bun run sync-utils && bun test --coverage tests/*.test.js",
-    "lint": "eslint tests/*.js",
-    "lint:fix": "eslint --fix tests/*.js",
-    "format": "prettier --write tests/*.js",
-    "typecheck": "tsc --noEmit"
+    "build": "cd packages/apple-notes-cli && bun run build",
+    "sync-utils": "cd packages/apple-notes-cli && bun run sync-utils",
+    "test": "cd packages/apple-notes-cli && bun run test",
+    "test:coverage": "cd packages/apple-notes-cli && bun test --coverage tests/*.test.js",
+    "lint": "eslint packages/apple-notes-cli/tests/*.js",
+    "lint:fix": "eslint --fix packages/apple-notes-cli/tests/*.js",
+    "format": "prettier --write packages/apple-notes-cli/tests/*.js",
+    "typecheck": "cd packages/apple-notes-cli && tsc --noEmit"
   },
   "keywords": [
     "apple-notes",
@@ -23,23 +27,24 @@
     "skill",
     "agent skills"
   ],
-  "author": "",
+  "author": "peerasak-u",
   "license": "MIT",
   "engines": {
     "bun": ">=1.0.0"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/node": "^20.0.0",
     "eslint": "^8.55.0",
     "prettier": "^3.1.0",
     "typescript": "^5.3.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/apple-notes-skill.git"
+    "url": "https://github.com/peerasak-u/apple-notes-skill.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/apple-notes-skill/issues"
+    "url": "https://github.com/peerasak-u/apple-notes-skill/issues"
   },
-  "homepage": "https://github.com/your-username/apple-notes-skill#readme"
+  "homepage": "https://github.com/peerasak-u/apple-notes-skill#readme"
 }

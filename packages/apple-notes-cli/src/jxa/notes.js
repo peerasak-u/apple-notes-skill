@@ -653,20 +653,20 @@ function generateUniqueTitle(baseTitle, folder) {
 
 function getUsage() {
   return `Usage:
-  osascript -l JavaScript notes.js search <query>              - Search notes by content
-  osascript -l JavaScript notes.js list <query>                - List notes by title
-  osascript -l JavaScript notes.js read <title> [folder]       - Read note by title
-  osascript -l JavaScript notes.js read-index <query> <index>  - Read by search index
-  osascript -l JavaScript notes.js recent [count] [folder]     - Get recent notes (default: 5)
-  osascript -l JavaScript notes.js create <title> <body> [folder] - Create note from markdown
-  osascript -l JavaScript notes.js delete <title> [folder]     - Delete note by title
+  apple-notes search <query>              - Search notes by content
+  apple-notes list <query>                - List notes by title
+  apple-notes read <title> [folder]       - Read note by title
+  apple-notes read-index <query> <index>  - Read by search index
+  apple-notes recent [count] [folder]     - Get recent notes (default: 5)
+  apple-notes create <title> <body> [folder] - Create note from markdown
+  apple-notes delete <title> [folder]     - Delete note by title
 
 Examples:
-  osascript -l JavaScript notes.js list 'meeting'
-  osascript -l JavaScript notes.js read-index 'meeting' 2
-  osascript -l JavaScript notes.js read 'Todo' 'Work'
-  osascript -l JavaScript notes.js recent 10 'Blog'
-  osascript -l JavaScript notes.js create 'Meeting Notes' '# Agenda\\n- Item 1' 'Work'
-  osascript -l JavaScript notes.js delete 'Old Note' 'Archive'
+  apple-notes list 'meeting'
+  apple-notes read-index 'meeting' 2
+  apple-notes read 'Todo' 'Work'
+  apple-notes recent 10 'Blog'
+  apple-notes create 'Meeting Notes' '# Agenda\\n- Item 1' 'Work'
+  apple-notes delete 'Old Note' 'Archive'
 `;
 }

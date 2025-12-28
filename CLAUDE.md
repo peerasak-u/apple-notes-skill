@@ -5,17 +5,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build/Lint/Test Commands
 
 ```bash
+bun run build                     # Build the CLI package
 bun test                          # Run all tests
-bun test --coverage tests/*.test.js  # Run tests with coverage
-bun run lint                      # Run ESLint on tests/
+bun test --coverage               # Run tests with coverage
+bun run lint                      # Run ESLint on tests
 bun run lint:fix                  # Auto-fix linting issues
 bun run format                    # Format with Prettier
-bun run typecheck                 # TypeScript type checking (JS files)
+bun run typecheck                 # TypeScript type checking
 ```
 
 ### Running Single Tests
 
 ```bash
+cd packages/apple-notes-cli
 bun test tests/conversion.unit.test.js                           # Single test file
 bun test --test-name-pattern="HTML to Markdown" tests/*.test.js  # By test name
 bun test --reporter=verbose tests/*.test.js                      # Verbose output
@@ -23,19 +25,42 @@ bun test --reporter=verbose tests/*.test.js                      # Verbose outpu
 
 ## Architecture
 
-This is a JXA (JavaScript for Automation) skill for Apple Notes on macOS. The main entry point is `skill/notes.js` which runs via `osascript -l JavaScript`.
+This is a monorepo containing:
 
-### Key Components
+1. **CLI Package** (`packages/apple-notes-cli/`) - npm package `@peerasak-u/apple-notes`
+2. **Skill** (`skills/apple-notes/`) - Claude Code plugin (markdown only)
 
-- **skill/notes.js** - JXA script with command dispatcher (`run(argv)`), conversion functions (`htmlToMarkdown`, `markdownToHtml`), command handlers (search, list, read, create, delete, recent), and helper utilities
-- **tests/*.unit.test.js** - Bun test runner tests for pure JS functions
-- **tests/conversion-utils.js** - Pure JS utilities ported from notes.js for testing
+### CLI Package Structure
+
+```
+packages/apple-notes-cli/
+├── src/
+│   ├── index.ts          # CLI entry point
+│   ├── executor.ts       # osascript wrapper
+│   └── jxa/
+│       └── notes.js      # JXA script for Apple Notes
+├── tests/
+│   ├── conversion.unit.test.js
+│   ├── utils.unit.test.js
+│   └── conversion-utils.js
+└── scripts/
+    └── sync-test-utils.js
+```
+
+### Skill Structure
+
+```
+skills/apple-notes/
+├── SKILL.md              # Agent instructions
+└── references/
+    └── COMMANDS.md       # Command documentation
+```
 
 ### Dual Runtime Environment
 
-- `skill/notes.js` runs in **JXA environment** (osascript) - no Node.js built-ins, no async/await, no ES modules
+- `src/jxa/notes.js` runs in **JXA environment** (osascript) - no Node.js built-ins, no async/await, no ES modules
+- `src/*.ts` runs in **Node.js/Bun** - TypeScript CLI wrapper
 - Tests run in **Bun** - uses `bun:test` with global `assert`
-- Type checking via `checkJs: true` applies only to tests/, not skill/
 
 ## Code Style
 
@@ -53,3 +78,11 @@ This is a JXA (JavaScript for Automation) skill for Apple Notes on macOS. The ma
 - HTML conversion fallback returns `[RAW_HTML]` prefix when conversion fails
 - `read-index` uses 1-based indexing
 - Nested folder paths use "/" separator
+
+## Publishing
+
+```bash
+cd packages/apple-notes-cli
+bun run build
+npm publish --access public
+```

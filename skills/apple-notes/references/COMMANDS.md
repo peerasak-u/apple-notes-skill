@@ -1,16 +1,9 @@
 # Command Reference
 
-## Setup (run once per session)
-
-```bash
-# Set the path (run this once per terminal session)
-export APPLE_NOTES_SKILL_PATH="$(for d in ~/.claude/plugins/marketplaces/apple-notes-marketplace/skills/apple-notes ~/.claude/skills/apple-notes ~/.opencode/skill/apple-notes; do [ -x "$d/scripts/run.sh" ] && echo "$d" && break; done)"
-```
-
 ## Run commands
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" <command> [args]
+bunx @peerasak-u/apple-notes <command> [args]
 ```
 
 ## Contents
@@ -30,7 +23,7 @@ osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" <command> [ar
 Search notes by body content.
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" search "<query>"
+bunx @peerasak-u/apple-notes search "<query>"
 ```
 
 **Output**: List of matching notes with title, folder, modified date, and preview.
@@ -42,7 +35,7 @@ osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" search "<quer
 List notes whose title contains the query. Returns indexed results.
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" list "<query>"
+bunx @peerasak-u/apple-notes list "<query>"
 ```
 
 **Output**: Numbered list. Use the index with `read-index`.
@@ -55,13 +48,13 @@ Read a note by title. Optionally specify folder.
 
 ```bash
 # From any folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read "<title>"
+bunx @peerasak-u/apple-notes read "<title>"
 
 # From specific folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read "<title>" "<folder>"
+bunx @peerasak-u/apple-notes read "<title>" "<folder>"
 
 # From nested folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read "<title>" "Work/Projects"
+bunx @peerasak-u/apple-notes read "<title>" "Work/Projects"
 ```
 
 **Output**: Full note content in Markdown with metadata header.
@@ -74,8 +67,8 @@ Read a note by its index from a previous `list` result.
 
 ```bash
 # First list, then read by 1-based index
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" list "meeting"
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read-index "meeting" 2
+bunx @peerasak-u/apple-notes list "meeting"
+bunx @peerasak-u/apple-notes read-index "meeting" 2
 ```
 
 ---
@@ -86,16 +79,16 @@ Get recently modified notes. Default count is 5.
 
 ```bash
 # Default: 5 recent from all folders
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent
+bunx @peerasak-u/apple-notes recent
 
 # Custom count
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent 10
+bunx @peerasak-u/apple-notes recent 10
 
 # From specific folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent 5 "Work"
+bunx @peerasak-u/apple-notes recent 5 "Work"
 
 # Folder first (also works)
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent "Work" 10
+bunx @peerasak-u/apple-notes recent "Work" 10
 ```
 
 ---
@@ -106,10 +99,10 @@ Create a new note from Markdown. Default folder is "Notes".
 
 ```bash
 # In default folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" create "<title>" "<markdown-body>"
+bunx @peerasak-u/apple-notes create "<title>" "<markdown-body>"
 
 # In specific folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" create "<title>" "<markdown-body>" "<folder>"
+bunx @peerasak-u/apple-notes create "<title>" "<markdown-body>" "<folder>"
 ```
 
 **Note**: If title exists, a suffix like "(2)" is added.
@@ -124,10 +117,10 @@ Delete a note by exact title match.
 
 ```bash
 # Delete from any folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" delete "<exact-title>"
+bunx @peerasak-u/apple-notes delete "<exact-title>"
 
 # Delete from specific folder
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" delete "<exact-title>" "<folder>"
+bunx @peerasak-u/apple-notes delete "<exact-title>" "<folder>"
 ```
 
 **Warning**: Permanent deletion. Requires exact title match.

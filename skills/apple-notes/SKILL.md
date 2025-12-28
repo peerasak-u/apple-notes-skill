@@ -5,21 +5,14 @@ description: Reads, searches, lists, creates, and deletes notes in Apple Notes o
 
 # Apple Notes
 
-Interacts with Apple Notes via JXA (JavaScript for Automation).
+Interacts with Apple Notes via the `@peerasak-u/apple-notes` CLI.
 
 ## Quick Reference
-
-### Setup (run once per session)
-
-```bash
-# Set the path (run this once per terminal session)
-export APPLE_NOTES_SKILL_PATH="$(for d in ~/.claude/plugins/marketplaces/apple-notes-marketplace/skills/apple-notes ~/.claude/skills/apple-notes ~/.opencode/skill/apple-notes .claude/skills/apple-notes .opencode/skill/apple-notes; do [ -x "$d/scripts/run.sh" ] && echo "$d" && break; done)"
-```
 
 ### Run commands
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" <command> [args]
+bunx @peerasak-u/apple-notes <command> [args]
 ```
 
 | Command | Usage |
@@ -39,20 +32,20 @@ osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" <command> [ar
 ### Find and read a note
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" list "budget"
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" read-index "budget" 2
+bunx @peerasak-u/apple-notes list "budget"
+bunx @peerasak-u/apple-notes read-index "budget" 2
 ```
 
 ### Create a note
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
+bunx @peerasak-u/apple-notes create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2" "Work"
 ```
 
 ### Check recent activity
 
 ```bash
-osascript -l JavaScript "$APPLE_NOTES_SKILL_PATH/scripts/notes.js" recent 10
+bunx @peerasak-u/apple-notes recent 10
 ```
 
 ## Output Format

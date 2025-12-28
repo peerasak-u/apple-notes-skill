@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
-const SOURCE = resolve(ROOT, 'skills/apple-notes/scripts/notes.js');
+const SOURCE = resolve(ROOT, 'src/jxa/notes.js');
 const TARGET = resolve(ROOT, 'tests/conversion-utils.js');
 
 const FUNCTIONS = ['htmlToMarkdown', 'markdownToHtml', 'getPreview'];
@@ -81,7 +81,7 @@ function main() {
   }
 
   const output = `// AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY
-// Source: skills/apple-notes/scripts/notes.js
+// Source: src/jxa/notes.js
 // Run \`bun run sync-utils\` to regenerate
 
 ${extractedFunctions.join('\n\n')}
