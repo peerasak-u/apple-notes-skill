@@ -2,6 +2,7 @@
 
 > 🍎 A Claude Code Plugin for interacting with Apple Notes on macOS
 
+[![npm version](https://img.shields.io/npm/v/@peerasak-u/apple-notes)](https://www.npmjs.com/package/@peerasak-u/apple-notes)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: macOS](https://img.shields.io/badge/Platform-macOS-lightgrey)](https://www.apple.com/macos/)
 [![Claude Code Plugin](https://img.shields.io/badge/Claude_Code-Plugin-blue)](https://claude.ai/code)
@@ -34,8 +35,8 @@ Agent Skills are folders of instructions, scripts, and resources that agents can
 
 - macOS 10.10+
 - Apple Notes app installed
+- Node.js 18+ or Bun (for CLI usage)
 - `osascript` (included with macOS)
-- Bun 1.0+ (for development/testing)
 
 ## Installation
 
@@ -86,9 +87,15 @@ Once installed, you can use the skill directly in your AI coding assistant:
 
 ### Command-Line Usage
 
+The CLI is available as an npm package:
+
 ```bash
-# From the plugin directory
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" <command> [args...]
+# Run directly with bunx/npx
+bunx @peerasak-u/apple-notes <command> [args...]
+
+# Or install globally
+npm install -g @peerasak-u/apple-notes
+apple-notes <command> [args...]
 ```
 
 ## Commands
@@ -96,13 +103,13 @@ osascript -l JavaScript "skills/apple-notes/scripts/notes.js" <command> [args...
 ### Search Notes by Content
 
 ```bash
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" search "meeting notes"
+bunx @peerasak-u/apple-notes search "meeting notes"
 ```
 
 ### List Notes by Title
 
 ```bash
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" list "project"
+bunx @peerasak-u/apple-notes list "project"
 ```
 
 Returns indexed results for use with `read-index`.
@@ -111,46 +118,46 @@ Returns indexed results for use with `read-index`.
 
 ```bash
 # Read from any folder
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read "My Note"
+bunx @peerasak-u/apple-notes read "My Note"
 
 # Read from specific folder
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read "My Note" "Work"
+bunx @peerasak-u/apple-notes read "My Note" "Work"
 
 # Read from nested folder
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read "My Note" "Work/Projects"
+bunx @peerasak-u/apple-notes read "My Note" "Work/Projects"
 ```
 
 ### Read Note by Index
 
 ```bash
 # First, list notes
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" list "meeting"
+bunx @peerasak-u/apple-notes list "meeting"
 
 # Then read by index (1-based)
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read-index "meeting" 2
+bunx @peerasak-u/apple-notes read-index "meeting" 2
 ```
 
 ### Get Recent Notes
 
 ```bash
 # Get 5 recent notes (default)
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" recent
+bunx @peerasak-u/apple-notes recent
 
 # Get 10 recent notes
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" recent 10
+bunx @peerasak-u/apple-notes recent 10
 
 # Get recent notes from specific folder
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" recent 5 "Work"
+bunx @peerasak-u/apple-notes recent 5 "Work"
 ```
 
 ### Create a Note
 
 ```bash
 # Create in default folder
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2"
+bunx @peerasak-u/apple-notes create "Meeting Notes" "# Agenda\n- Item 1\n- Item 2"
 
 # Create in specific folder
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" create "Meeting Notes" "# Agenda\n- Item 1" "Work"
+bunx @peerasak-u/apple-notes create "Meeting Notes" "# Agenda\n- Item 1" "Work"
 ```
 
 Note: If a note with the same title exists, a suffix like "(2)" will be added.
@@ -159,10 +166,10 @@ Note: If a note with the same title exists, a suffix like "(2)" will be added.
 
 ```bash
 # Delete from any folder (exact title match)
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" delete "Old Note"
+bunx @peerasak-u/apple-notes delete "Old Note"
 
 # Delete from specific folder
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" delete "Old Note" "Archive"
+bunx @peerasak-u/apple-notes delete "Old Note" "Archive"
 ```
 
 ⚠️ **Warning**: This permanently deletes the note. Use exact title match.
@@ -173,7 +180,7 @@ osascript -l JavaScript "skills/apple-notes/scripts/notes.js" delete "Old Note" 
 
 ```bash
 # Step 1: Search for notes about "budget"
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" list "budget"
+bunx @peerasak-u/apple-notes list "budget"
 
 # Output shows indexed results like:
 # [1] Budget 2024
@@ -181,13 +188,13 @@ osascript -l JavaScript "skills/apple-notes/scripts/notes.js" list "budget"
 # [3] Project Budget
 
 # Step 2: Read the second result
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" read-index "budget" 2
+bunx @peerasak-u/apple-notes read-index "budget" 2
 ```
 
 ### Workflow: Create a Daily Note
 
 ```bash
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" create \
+bunx @peerasak-u/apple-notes create \
   "Daily Log - 2024-01-15" \
   "# Tasks\n- [ ] Task 1\n- [ ] Task 2\n\n# Notes\nToday's observations..." \
   "Journal"
@@ -196,7 +203,7 @@ osascript -l JavaScript "skills/apple-notes/scripts/notes.js" create \
 ### Workflow: Check Recent Activity
 
 ```bash
-osascript -l JavaScript "skills/apple-notes/scripts/notes.js" recent 10
+bunx @peerasak-u/apple-notes recent 10
 ```
 
 ## HTML to Markdown Conversion
@@ -230,30 +237,40 @@ Errors are returned as strings starting with "Error:". Common errors:
 
 ### Project Structure
 
+This is a monorepo containing:
+
 ```
 apple-notes-skill/
-├── .claude-plugin/     # Plugin manifest
-│   └── plugin.json
-├── skills/             # Skills directory
-│   └── apple-notes/    # Apple Notes skill
-│       ├── SKILL.md    # Skill definition
-│       ├── scripts/
-│       │   └── notes.js    # JXA implementation
+├── packages/
+│   └── apple-notes-cli/       # npm package (@peerasak-u/apple-notes)
+│       ├── src/
+│       │   ├── index.ts       # CLI entry point
+│       │   ├── executor.ts    # osascript wrapper
+│       │   └── jxa/
+│       │       └── notes.js   # JXA implementation
+│       ├── tests/             # Unit tests
+│       │   ├── conversion.unit.test.js
+│       │   └── utils.unit.test.js
+│       └── package.json
+├── skills/                    # Claude Code plugin (markdown only)
+│   └── apple-notes/
+│       ├── SKILL.md           # Skill definition
 │       └── references/
-│           └── COMMANDS.md  # Command reference
-├── tests/              # Unit tests
-│   ├── conversion.test.js
-│   └── utils.test.js
-├── docs/               # Documentation
-├── README.md           # This file
-├── LICENSE             # MIT License
-├── package.json        # Bun tooling
+│           └── COMMANDS.md    # Command reference
+├── .claude-plugin/            # Plugin manifest
+│   └── plugin.json
+├── docs/                      # Documentation
+├── README.md                  # This file
+├── LICENSE                    # MIT License
 └── .gitignore
 ```
 
 ### Running Tests
 
 ```bash
+# Navigate to CLI package
+cd packages/apple-notes-cli
+
 # Install dependencies
 bun install
 
@@ -261,17 +278,29 @@ bun install
 bun test
 
 # Run tests with coverage
-bun test --coverage tests/*.test.js
+bun test --coverage
 ```
 
-### Linting
+### Linting & Type Checking
 
 ```bash
+cd packages/apple-notes-cli
+
 # Run linter
 bun run lint
 
 # Fix linting issues
 bun run lint:fix
+
+# Type check
+bun run typecheck
+```
+
+### Building
+
+```bash
+cd packages/apple-notes-cli
+bun run build
 ```
 
 ## Contributing
@@ -298,6 +327,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Acknowledgments
 
 - Built with [JXA](https://developer.apple.com/library/archive/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/) (JavaScript for Automation)
+- CLI available on [npm](https://www.npmjs.com/package/@peerasak-u/apple-notes)
 - Distributed as [Claude Code Plugin](https://claude.ai/code)
 - Compatible with [OpenCode](https://opencode.ai) via Agent Skills format
 
