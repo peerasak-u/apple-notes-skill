@@ -1,0 +1,98 @@
+name: Publish to npm
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run linter
+        run: bun run lint
+
+      - name: Run tests
+        run: bun test
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.bump.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version
+        id: bump
+        run: |
+          cd packages/apple-notes-cli
+
+          # Get current version
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Current version: $CURRENT_VERSION"
+
+          # Determine bump type from commits since last tag
+          COMMITS=$(git log --pretty=format:"%s" $(git describe --tags --abbrev=0 2>/dev/null || echo "")..HEAD@{u})
+
+          BUMP_TYPE="patch"
+          echo "$COMMITS" | grep -qE "^feat[(:]" && BUMP_TYPE="minor"
+          echo "$COMMITS" | grep -qE "BREAKING CHANGE:" && BUMP_TYPE="major"
+          echo "Bump type: $BUMP_TYPE"
+
+          # Calculate new version
+          NEW_VERSION=$(npm version $BUMP_TYPE --no-git-tag-version | sed 's/v//')
+          echo "New version: $NEW_VERSION"
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+          # Update package.json in repo
+          git add packages/apple-notes-cli/package.json
+          git commit -m "chore: bump version to $NEW_VERSION"
+
+      - name: Build package
+        run: |
+          cd packages/apple-notes-cli
+          bun run build
+
+      - name: Publish to npm
+        run: |
+          cd packages/apple-notes-cli
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create and push tag
+        run: |
+          git tag v${{ steps.bump.outputs.version }}
+          git push origin main --tags
