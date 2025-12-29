@@ -71,10 +71,27 @@ jobs:
           echo "$COMMITS" | grep -qE "BREAKING CHANGE:" && BUMP_TYPE="major"
           echo "Bump type: $BUMP_TYPE"
 
-          # Calculate new version
-          NEW_VERSION=$(npm version $BUMP_TYPE --no-git-tag-version | sed 's/v//')
+          # Calculate new version using node
+          NEW_VERSION=$(node -e "
+            const version = '$CURRENT_VERSION'.split('.').map(Number);
+            const type = '$BUMP_TYPE';
+            if (type === 'major') {
+              version[0]++;
+              version[1] = 0;
+              version[2] = 0;
+            } else if (type === 'minor') {
+              version[1]++;
+              version[2] = 0;
+            } else {
+              version[2]++;
+            }
+            console.log(version.join('.'));
+          ")
           echo "New version: $NEW_VERSION"
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+          # Update package.json with new version
+          npm version $NEW_VERSION --no-git-tag-version
 
           # Update package.json in repo
           git add packages/apple-notes-cli/package.json
