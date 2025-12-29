@@ -57,10 +57,8 @@ jobs:
       - name: Bump version
         id: bump
         run: |
-          cd packages/apple-notes-cli
-
           # Get current version
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          CURRENT_VERSION=$(node -p "require('./packages/apple-notes-cli/package.json').version")
           echo "Current version: $CURRENT_VERSION"
 
           # Determine bump type from commits since last tag
@@ -90,10 +88,12 @@ jobs:
           echo "New version: $NEW_VERSION"
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
-          # Update package.json with new version
+          # Update package.json with new version using npm
+          cd packages/apple-notes-cli
           npm version $NEW_VERSION --no-git-tag-version
+          cd ..
 
-          # Update package.json in repo
+          # Commit the version bump
           git add packages/apple-notes-cli/package.json
           git commit -m "chore: bump version to $NEW_VERSION"
 
