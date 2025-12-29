@@ -1,8 +1,8 @@
 import { describe, it } from "bun:test";
 import assert from "node:assert";
 
-// Import conversion functions directly
-import { htmlToMarkdown, markdownToHtml } from "./conversion-utils.js";
+// Import conversion functions from TypeScript module
+import { htmlToMarkdown, markdownToHtml } from "../src/converter.ts";
 
 describe("HTML to Markdown Conversion", () => {
   it("should handle empty input", () => {

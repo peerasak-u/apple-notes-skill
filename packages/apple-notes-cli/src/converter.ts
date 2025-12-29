@@ -1,11 +1,26 @@
-// AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY
-// Source: src/jxa/notes.js
-// Run `bun run sync-utils` to regenerate
+/**
+ * HTML to Markdown conversion functions
+ * Ported from JXA notes.js for TypeScript environment
+ */
 
-function htmlToMarkdown(html) {
-  if (!html) {
-    return "";
+/**
+ * Gets a preview of text content by truncating to a maximum length
+ */
+export function getPreview(body: string, maxLength: number): string {
+  if (!body) return "";
+  const length = Math.min(maxLength, body.length);
+  let preview = body.substring(0, length);
+  if (body.length > length) {
+    preview += "...";
   }
+  return preview;
+}
+
+/**
+ * Converts HTML from Apple Notes to Markdown format
+ */
+export function htmlToMarkdown(html: string): string {
+  if (!html) return "";
 
   let md = html;
 
@@ -81,10 +96,11 @@ function htmlToMarkdown(html) {
   return md;
 }
 
-function markdownToHtml(markdown) {
-  if (!markdown) {
-    return "";
-  }
+/**
+ * Converts Markdown to HTML for Apple Notes storage
+ */
+export function markdownToHtml(markdown: string): string {
+  if (!markdown) return "";
 
   let html = markdown;
 
@@ -128,13 +144,13 @@ function markdownToHtml(markdown) {
   html = html.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
 
   // Wrap consecutive <li> in <ul>
-  html = html.replace(/(<li>.*<\/li>\n?)+/g, function (match) {
+  html = html.replace(/(<li>.*<\/li>\n?)+/g, (match) => {
     return "<ul>" + match + "</ul>";
   });
 
   // Paragraphs - wrap lines that aren't already HTML
   const lines = html.split("\n");
-  const result = [];
+  const result: string[] = [];
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
     if (line === "") {
@@ -149,17 +165,3 @@ function markdownToHtml(markdown) {
 
   return html;
 }
-
-function getPreview(body, maxLength) {
-  if (!body) {
-    return "";
-  }
-  const length = Math.min(maxLength, body.length);
-  let preview = body.substring(0, length);
-  if (body.length > length) {
-    preview += "...";
-  }
-  return preview;
-}
-
-export { htmlToMarkdown, markdownToHtml, getPreview };

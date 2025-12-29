@@ -12,9 +12,8 @@
   ],
   "scripts": {
     "build": "bun build src/index.ts --outdir dist --target node",
-    "sync-utils": "bun scripts/sync-test-utils.js",
-    "test": "bun run sync-utils && bun test tests/*.test.js",
-    "test:coverage": "bun run sync-utils && bun test --coverage tests/*.test.js",
+    "test": "bun test tests/*.test.js",
+    "test:coverage": "bun test --coverage tests/*.test.js",
     "lint": "eslint tests/*.js",
     "lint:fix": "eslint --fix tests/*.js",
     "typecheck": "tsc --noEmit"

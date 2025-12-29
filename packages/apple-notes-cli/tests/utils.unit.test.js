@@ -1,8 +1,8 @@
 import { describe, it } from "bun:test";
 import assert from "node:assert";
 
-// Import synced utilities from notes.js
-import { getPreview } from "./conversion-utils.js";
+// Import utilities from TypeScript module
+import { getPreview } from "../src/converter.ts";
 
 // generateUniqueTitle is kept inline because JXA version uses folder.notes()
 // which is not portable to Node.js/Bun runtime
