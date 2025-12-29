@@ -1,6 +1,6 @@
 {
   "name": "@peerasak-u/apple-notes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CLI tool for interacting with Apple Notes on macOS",
   "type": "module",
   "bin": {
