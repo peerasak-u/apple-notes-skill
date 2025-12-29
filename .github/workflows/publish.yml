@@ -88,10 +88,14 @@ jobs:
           echo "New version: $NEW_VERSION"
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
-          # Update package.json with new version using npm
-          cd packages/apple-notes-cli
-          npm version $NEW_VERSION --no-git-tag-version
-          cd ..
+          # Update package.json directly with node (avoid npm version which has path issues)
+          node -e "
+            const fs = require('fs');
+            const path = './packages/apple-notes-cli/package.json';
+            const pkg = JSON.parse(fs.readFileSync(path, 'utf8'));
+            pkg.version = '$NEW_VERSION';
+            fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + '\n');
+          "
 
           # Commit the version bump
           git add packages/apple-notes-cli/package.json
