@@ -15,15 +15,16 @@ Interacts with Apple Notes via the `@peerasak-u/apple-notes` CLI.
 bunx @peerasak-u/apple-notes <command> [args]
 ```
 
-| Command | Usage |
-|---------|-------|
-| `search <query>` | Search notes by body content |
-| `list <query>` | List notes by title (returns indexes) |
-| `read <title> [folder]` | Read note content |
-| `read-index <query> <index>` | Read by index from list result |
-| `recent [count] [folder]` | Get recent notes (default: 5) |
-| `create <title> <body> [folder]` | Create note from Markdown |
-| `delete <title> [folder]` | Delete note (exact match) |
+| Command                               | Usage                                 |
+| ------------------------------------- | ------------------------------------- |
+| `search <query>`                      | Search notes by body content          |
+| `list <query>`                        | List notes by title (returns indexes) |
+| `read <title> [folder]`               | Read note content                     |
+| `read-index <query> <index>`          | Read by index from list result        |
+| `recent [count] [folder]`             | Get recent notes (default: 5)         |
+| `create <title> <body> [folder]`      | Create note from Markdown             |
+| `delete <title> [folder]`             | Delete note (exact match)             |
+| `move <title> <destination> [source]` | Move note to folder                   |
 
 **Full command details**: See [references/COMMANDS.md](references/COMMANDS.md)
 

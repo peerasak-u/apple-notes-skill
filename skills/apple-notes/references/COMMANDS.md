@@ -15,6 +15,7 @@ bunx @peerasak-u/apple-notes <command> [args]
 - [recent](#recent) - Get recent notes
 - [create](#create) - Create note
 - [delete](#delete) - Delete note
+- [move](#move) - Move note
 
 ---
 
@@ -127,9 +128,31 @@ bunx @peerasak-u/apple-notes delete "<exact-title>" "<folder>"
 
 ---
 
+## move
+
+Move a note to a different folder.
+
+```bash
+# Move note to destination folder (searches all folders for note)
+bunx @peerasak-u/apple-notes move "<title>" "<destination-folder>"
+
+# Move note from specific source folder (to disambiguate)
+bunx @peerasak-u/apple-notes move "<title>" "<destination-folder>" "<source-folder>"
+```
+
+**Behavior**:
+
+- Requires exact title match.
+- If multiple notes with the same title exist and no source folder is provided, it returns an error listing the matches.
+- Destination folder must exist.
+- Validates source folder if provided.
+
+---
+
 ## Folder Paths
 
 Folders can be:
+
 - Simple: `"Work"`
 - Nested: `"Work/Projects/2024"`
 
@@ -138,6 +161,7 @@ Folders can be:
 ## Error Messages
 
 Errors return strings starting with `Error:`:
+
 - `Error: No notes found matching...` - No results
 - `Error: Folder 'X' not found` - Invalid folder
 - `Error: Index X out of range` - Invalid read-index
@@ -150,6 +174,7 @@ Errors return strings starting with `Error:`:
 ### Markdown Conversion
 
 Note content is converted from Apple Notes HTML to Markdown:
+
 - `<h1>` to `#`
 - `<b>` to `**text**`
 - `<i>` to `*text*`

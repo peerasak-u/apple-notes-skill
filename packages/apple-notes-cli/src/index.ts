@@ -15,6 +15,7 @@ Commands:
   recent [count] [folder]           Get recently modified notes (default: 5)
   create <title> <body> [folder]    Create a new note (body in Markdown)
   delete <title> [folder]           Delete a note by exact title
+  move <title> <destination> [source] Move a note to a different folder
 
 Examples:
   apple-notes search "meeting notes"
@@ -26,6 +27,7 @@ Examples:
   apple-notes recent 5 "Work"
   apple-notes create "New Note" "# Hello\\n- Item 1" "Notes"
   apple-notes delete "Old Note"
+  apple-notes move "Idea" "Projects" "Inbox"
 
 Folder paths use "/" separator for nested folders (e.g., "Work/Projects/2024").
 `;

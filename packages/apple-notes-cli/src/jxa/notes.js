@@ -11,44 +11,55 @@ function run(argv) {
   const command = argv[0];
 
   switch (command) {
-    case "search":
+    case 'search':
       if (argv.length < 2) {
-        return "Error: search requires a query string\n" + getUsage();
+        return 'Error: search requires a query string\n' + getUsage();
       }
       return searchNotes(argv[1]);
 
-    case "list":
+    case 'list':
       if (argv.length < 2) {
-        return "Error: list requires a search term\n" + getUsage();
+        return 'Error: list requires a search term\n' + getUsage();
       }
       return listNotes(argv[1]);
 
-    case "read":
+    case 'read':
       if (argv.length < 2) {
-        return "Error: read requires a note identifier\n" + getUsage();
+        return 'Error: read requires a note identifier\n' + getUsage();
       }
-      return readNote(argv[1], argv[2] || "");
+      return readNote(argv[1], argv[2] || '');
 
-    case "read-index":
+    case 'read-index':
       if (argv.length < 3) {
-        return "Error: read-index requires search term and index\n" + getUsage();
+        return (
+          'Error: read-index requires search term and index\n' + getUsage()
+        );
       }
       return readNoteByIndex(argv[1], parseInt(argv[2], 10));
 
-    case "recent":
+    case 'recent':
       return parseRecentArgs(argv.slice(1));
 
-    case "create":
+    case 'create':
       if (argv.length < 3) {
-        return "Error: create requires title and body\n" + getUsage();
+        return 'Error: create requires title and body\n' + getUsage();
       }
-      return createNote(argv[1], argv[2], argv[3] || "Notes");
+      return createNote(argv[1], argv[2], argv[3] || 'Notes');
 
-    case "delete":
+    case 'delete':
       if (argv.length < 2) {
-        return "Error: delete requires a note title\n" + getUsage();
+        return 'Error: delete requires a note title\n' + getUsage();
       }
-      return deleteNote(argv[1], argv[2] || "");
+      return deleteNote(argv[1], argv[2] || '');
+
+    case 'move':
+      if (argv.length < 3) {
+        return (
+          'Error: move requires a note title and destination folder\n' +
+          getUsage()
+        );
+      }
+      return moveNote(argv[1], argv[2], argv[3] || '');
 
     default:
       return `Error: Unknown command '${command}'\n` + getUsage();
@@ -63,7 +74,7 @@ function run(argv) {
 // JXA now passes raw HTML to/from Apple Notes
 
 function getNotesApp() {
-  return Application("Notes");
+  return Application('Notes');
 }
 
 function searchNotes(query) {
@@ -96,7 +107,7 @@ function searchNotes(query) {
     output += `Folder: ${r.folder}\n`;
     output += `Modified: ${r.modified}\n`;
     output += `Preview: ${r.preview}\n`;
-    output += "---\n\n";
+    output += '---\n\n';
   }
 
   return output;
@@ -112,7 +123,7 @@ function listNotes(query) {
     const name = note.name();
     if (name && name.toLowerCase().includes(query.toLowerCase())) {
       const folderName = getFolderName(note);
-      const body = note.body() || "";
+      const body = note.body() || '';
       const preview = getPreview(body, 80);
       results.push({
         index: results.length + 1,
@@ -145,7 +156,7 @@ function readNote(identifier, folderName) {
   const app = getNotesApp();
   let matchingNotes = [];
 
-  if (folderName === "") {
+  if (folderName === '') {
     // Search all notes
     const allNotes = app.notes();
     for (let i = 0; i < allNotes.length; i++) {
@@ -192,7 +203,7 @@ function readNote(identifier, folderName) {
 
   if (matchingNotes.length === 0) {
     let errorMsg = `Error: No note found matching '${identifier}'`;
-    if (folderName !== "") {
+    if (folderName !== '') {
       errorMsg += ` in folder '${folderName}'`;
     }
     return errorMsg;
@@ -239,7 +250,7 @@ function readNoteByIndex(query, index) {
 
 function parseRecentArgs(args) {
   let limit = 5;
-  let folderName = "";
+  let folderName = '';
 
   if (args.length >= 1) {
     const arg1 = args[0];
@@ -267,7 +278,7 @@ function getRecentNotes(limit, folderName) {
   const app = getNotesApp();
   let notes = [];
 
-  if (folderName === "") {
+  if (folderName === '') {
     notes = app.notes();
   } else {
     const folder = findFolder(folderName);
@@ -278,8 +289,8 @@ function getRecentNotes(limit, folderName) {
   }
 
   if (notes.length === 0) {
-    let msg = "No notes found";
-    if (folderName !== "") {
+    let msg = 'No notes found';
+    if (folderName !== '') {
       msg += ` in '${folderName}' folder`;
     }
     return msg;
@@ -301,15 +312,15 @@ function getRecentNotes(limit, folderName) {
   // Get top N
   const count = Math.min(limit, notesWithDates.length);
   let output = `Last ${count} note(s)`;
-  if (folderName !== "") {
+  if (folderName !== '') {
     output += ` from '${folderName}' folder`;
   }
-  output += ":\n\n";
+  output += ':\n\n';
 
   for (let i = 0; i < count; i++) {
     const item = notesWithDates[i];
     const note = item.note;
-    const body = note.body() || "";
+    const body = note.body() || '';
     const preview = getPreview(body, 100);
     const folder = getFolderName(note) || folderName;
 
@@ -337,12 +348,12 @@ function createNote(title, body, folderName) {
   folder.notes.push(newNote);
 
   // Get the created note to return info
-  const createdNote = folder.notes().find((n) => n.name() === uniqueTitle);
+  const createdNote = folder.notes().find(n => n.name() === uniqueTitle);
   if (!createdNote) {
     return `Note created but could not retrieve details.\nTitle: ${uniqueTitle}\nFolder: ${folderName}`;
   }
 
-  let output = "Note created successfully!\n\n";
+  let output = 'Note created successfully!\n\n';
   output += `Title: ${createdNote.name()}\n`;
   output += `Folder: ${folderName}\n`;
   output += `Created: ${createdNote.creationDate().toString()}\n`;
@@ -355,7 +366,7 @@ function deleteNote(title, folderName) {
   let targetNote = null;
   let targetFolder = null;
 
-  if (folderName === "") {
+  if (folderName === '') {
     // Search all notes for exact match
     const allNotes = app.notes();
     for (let i = 0; i < allNotes.length; i++) {
@@ -382,7 +393,7 @@ function deleteNote(title, folderName) {
 
   if (!targetNote) {
     let errorMsg = `Error: No note found with exact title '${title}'`;
-    if (folderName !== "") {
+    if (folderName !== '') {
       errorMsg += ` in folder '${folderName}'`;
     }
     return errorMsg;
@@ -397,6 +408,78 @@ function deleteNote(title, folderName) {
   return `Note deleted successfully!\n\nTitle: ${deletedTitle}\nFolder: ${deletedFolder}`;
 }
 
+function moveNote(title, destFolderName, sourceFolderName) {
+  const app = getNotesApp();
+  const destFolder = findFolder(destFolderName);
+
+  if (!destFolder) {
+    return `Error: Destination folder '${destFolderName}' not found`;
+  }
+
+  let targetNote = null;
+  let sourceFolder = null;
+
+  if (sourceFolderName && sourceFolderName !== '') {
+    sourceFolder = findFolder(sourceFolderName);
+    if (!sourceFolder) {
+      return `Error: Source folder '${sourceFolderName}' not found`;
+    }
+    const folderNotes = sourceFolder.notes();
+    for (let i = 0; i < folderNotes.length; i++) {
+      const note = folderNotes[i];
+      if (note.name() === title) {
+        targetNote = note;
+        break;
+      }
+    }
+  } else {
+    // Global search
+    // We need to check for ambiguity
+    const allNotes = app.notes();
+    const matches = [];
+    for (let i = 0; i < allNotes.length; i++) {
+      const note = allNotes[i];
+      if (note.name() === title) {
+        matches.push(note);
+      }
+    }
+
+    if (matches.length === 0) {
+      return `Error: No note found with exact title '${title}'`;
+    } else if (matches.length > 1) {
+      let msg = `Error: Multiple notes found with title '${title}'. Please specify the source folder:\n\n`;
+      for (let i = 0; i < matches.length; i++) {
+        const note = matches[i];
+        const folder = getFolderName(note);
+        msg += `- ${title} (in '${folder}')\n`;
+      }
+      return msg;
+    } else {
+      targetNote = matches[0];
+    }
+  }
+
+  if (!targetNote) {
+    let errorMsg = `Error: No note found with exact title '${title}'`;
+    if (sourceFolderName) {
+      errorMsg += ` in folder '${sourceFolderName}'`;
+    }
+    return errorMsg;
+  }
+
+  const oldFolderName = getFolderName(targetNote);
+
+  // If already in destination, do nothing
+  if (oldFolderName === destFolder.name()) {
+    return `Note '${title}' is already in '${destFolderName}'`;
+  }
+
+  // Execute move
+  app.move(targetNote, { to: destFolder });
+
+  return `Note moved successfully!\n\nTitle: ${title}\nFrom: ${oldFolderName}\nTo: ${destFolder.name()}`;
+}
+
 // ============================================================================
 // Helper Functions
 // ============================================================================
@@ -405,21 +488,31 @@ function findFolder(folderPath) {
   const app = getNotesApp();
   const defaultAccount = app.defaultAccount();
 
-  if (folderPath.includes("/")) {
+  if (folderPath.includes('/')) {
     // Nested folder path
-    const parts = folderPath.split("/");
-    let currentFolder = defaultAccount.folders().find((f) => f.name() === "Notes");
+    const parts = folderPath.split('/');
+    let currentFolder = null;
+
+    // Find the first folder at the account level
+    const topLevelFolders = defaultAccount.folders();
+    for (let i = 0; i < topLevelFolders.length; i++) {
+      if (topLevelFolders[i].name() === parts[0]) {
+        currentFolder = topLevelFolders[i];
+        break;
+      }
+    }
 
     if (!currentFolder) {
       return null;
     }
 
-    for (const part of parts) {
+    // Traverse the rest of the path
+    for (let i = 1; i < parts.length; i++) {
       const subfolders = currentFolder.folders();
       let found = false;
-      for (let i = 0; i < subfolders.length; i++) {
-        if (subfolders[i].name() === part) {
-          currentFolder = subfolders[i];
+      for (let j = 0; j < subfolders.length; j++) {
+        if (subfolders[j].name() === parts[i]) {
+          currentFolder = subfolders[j];
           found = true;
           break;
         }
@@ -451,33 +544,33 @@ function getFolderName(note) {
   } catch (e) {
     // Container might not be accessible
   }
-  return "";
+  return '';
 }
 
 function getPreview(body, maxLength) {
-  if (!body) return "";
+  if (!body) return '';
   const length = Math.min(maxLength, body.length);
   let preview = body.substring(0, length);
   if (body.length > length) {
-    preview += "...";
+    preview += '...';
   }
   return preview;
 }
 
 function formatNoteContent(note) {
   const title = note.name();
-  const body = note.body() || "";
+  const body = note.body() || '';
   const folder = getFolderName(note);
   const created = note.creationDate().toString();
   const modified = note.modificationDate().toString();
 
-  let output = "========================================\n";
+  let output = '========================================\n';
   output += `Title: ${title}\n`;
   output += `Folder: ${folder}\n`;
   output += `Created: ${created}\n`;
   output += `Modified: ${modified}\n`;
-  output += "========================================\n\n";
-  output += body + "\n";
+  output += '========================================\n\n';
+  output += body + '\n';
 
   return output;
 }
@@ -513,6 +606,7 @@ function getUsage() {
   apple-notes recent [count] [folder]     - Get recent notes (default: 5)
   apple-notes create <title> <body> [folder] - Create note from markdown
   apple-notes delete <title> [folder]     - Delete note by title
+  apple-notes move <title> <destination> [source] - Move note to folder
 
 Examples:
   apple-notes list 'meeting'
@@ -521,5 +615,6 @@ Examples:
   apple-notes recent 10 'Blog'
   apple-notes create 'Meeting Notes' '# Agenda\\n- Item 1' 'Work'
   apple-notes delete 'Old Note' 'Archive'
+  apple-notes move 'Idea' 'Projects' 'Inbox'
 `;
 }
